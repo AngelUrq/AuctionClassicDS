@@ -1,0 +1,10 @@
+{
+    "CLIENT_KEY": "",
+    "SECRET_KEY": "",
+    "connected_realm_id": "",
+    "auction_house_id": "",
+    "db_host": "",
+    "db_user": "",
+    "db_password": "",
+    "db_name": ""
+}
