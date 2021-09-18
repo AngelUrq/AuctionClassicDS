@@ -32,10 +32,11 @@ CREATE TABLE [Item] (
     [RequiredLevel] INT,
     [ItemClass] NVARCHAR(40),
     [ItemSubClass] NVARCHAR(40),
-    [PurchasePrice] BIGINT,
-    [SellPrice] BIGINT,
+    [PurchasePriceGold] INT,
+    [PurchasePriceSilver] INT,
+    [SellPriceGold] INT,
+    [SellPriceSilver] INT,
     [MaxCount] INT,
     [IsEquippable] BIT,
-    [IsStackable] BIT,
-    [PurchaseQuantity] INT
+    [IsStackable] BIT
 );
