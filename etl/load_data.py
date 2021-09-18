@@ -192,6 +192,3 @@ def get_item_data():
     if len(items) > 0:
         save_items(items, config)
 
-
-#get_auction_data()
-get_item_data()
