@@ -102,7 +102,7 @@ def save_auctions(auctions, config):
 
 
 def save_items(items, config):
-    print('Loading ' + len(items) + 'items to the database')
+    print('Loading ' + str(len(items)) + 'items to the database')
     
     conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+config['db_host'] +';DATABASE='+config['db_name'] +';UID='+config['db_user'] +';PWD='+ config['db_password'] )
     cursor = conn.cursor()

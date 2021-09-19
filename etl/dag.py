@@ -1,3 +1,6 @@
+import sys
+sys.path.append('/opt/airflow/dags/AuctionClassicDS/etl')
+
 from datetime import datetime
 from datetime import timedelta
 from airflow import DAG
@@ -18,7 +21,7 @@ default_args = {
 }
 
 dag = DAG(
-  'auctions_dag',
+  'auction_classic_dag',
   default_args=default_args,
   description='DAG to get auction data',
   schedule_interval=timedelta(hours=1)
@@ -35,6 +38,5 @@ item_task = PythonOperator(
   python_callable=get_item_data,
   dag=dag
 )
-
 
 auction_task >> item_task
