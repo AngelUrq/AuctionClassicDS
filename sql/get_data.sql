@@ -1,15 +1,7 @@
 WITH TimesSeenTable AS (
-	SELECT T.AuctionId
-		, YEAR(T.FirstTimeSeen) AS FirstTimeSeenYear
-		, MONTH(T.FirstTimeSeen) AS FirstTimeSeenMonth
-		, DAY(T.FirstTimeSeen) AS FirstTimeSeenDay
-		, DATEPART(HOUR, T.FirstTimeSeen) AS FirstTimeSeenHour
-		, T.TimesSeen
-	FROM (
-		SELECT AuctionId, MIN(RecordedTime) AS FirstTimeSeen, COUNT(*) AS TimesSeen
-		FROM RecordedAuction
-		GROUP BY AuctionId
-	) T
+	SELECT AuctionId, COUNT(*) AS TimesSeen
+	FROM RecordedAuction
+	GROUP BY AuctionId
 )
 
 SELECT a.[Id]
@@ -22,10 +14,10 @@ SELECT a.[Id]
     , a.[TimeLeft]
 	, a.[Rand]
 	, a.[Seed]
-	, tst.[FirstTimeSeenYear]
-	, tst.[FirstTimeSeenMonth]
-	, tst.[FirstTimeSeenDay]
-	, tst.[FirstTimeSeenHour]
+	, YEAR(a.[FirstTimeSeen]) AS FirstTimeSeenYear
+	, MONTH(a.[FirstTimeSeen]) AS FirstTimeSeenMonth
+	, DAY(a.[FirstTimeSeen]) AS FirstTimeSeenDay
+	, DATEPART(HOUR, a.[FirstTimeSeen]) AS FirstTimeSeenHour
 	, tst.[TimesSeen]
     , i.[Name] AS ItemName
     , i.[Quality]
@@ -45,3 +37,4 @@ FROM Auction a
 		ON a.ItemId = i.Id
 	INNER JOIN TimesSeenTable tst
 		ON tst.AuctionId = a.Id
+WHERE DATEDIFF(HOUR, a.[FirstTimeSeen], CURRENT_TIMESTAMP) >= 48
