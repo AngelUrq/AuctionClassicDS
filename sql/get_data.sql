@@ -6,10 +6,8 @@ WITH TimesSeenTable AS (
 
 SELECT a.[Id]
     , a.[ItemId]
-	, a.[BidGold]
-	, a.[BidSilver]
-	, a.[BuyoutGold]
-	, a.[BuyoutSilver]
+	, a.[BidGold]  + a.[BidSilver] / 100.0 AS BidGold
+	, a.[BuyoutGold] + a.[BuyoutSilver] / 100.0 AS BuyoutGold
     , a.[Quantity]
     , a.[TimeLeft]
 	, a.[Rand]
@@ -38,3 +36,4 @@ FROM Auction a
 	INNER JOIN TimesSeenTable tst
 		ON tst.AuctionId = a.Id
 WHERE DATEDIFF(HOUR, a.[FirstTimeSeen], CURRENT_TIMESTAMP) >= 48
+    AND a.[BuyoutGold] + a.[BuyoutSilver] / 100.0 > 0

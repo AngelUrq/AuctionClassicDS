@@ -125,7 +125,7 @@ def get_missing_items(config):
     conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+config['db_host'] +';DATABASE='+config['db_name'] +';UID='+config['db_user'] +';PWD='+ config['db_password'] )
     cursor = conn.cursor()
 
-    sql = """SELECT TOP (50) ItemId
+    sql = """SELECT TOP (200) ItemId
             FROM (
                 SELECT DISTINCT ItemId FROM Auction
                 WHERE ItemId NOT IN (SELECT Id FROM Item)
@@ -142,7 +142,7 @@ def get_missing_items(config):
     return result
 
 
-def get_auction_data():
+def get_auction_data(save=True):
     config_path = os.path.join(os.path.dirname(__file__), 'config.json')
 
     with open(config_path) as json_data:
@@ -157,7 +157,10 @@ def get_auction_data():
 
     print(str(len(auctions)) + ' auctions processed.')
 
-    save_auctions(auctions, config)
+    if save:
+        save_auctions(auctions, config)
+    
+    return auctions
 
 
 def get_item_data():
@@ -191,4 +194,3 @@ def get_item_data():
 
     if len(items) > 0:
         save_items(items, config)
-
